@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym
 import numpy as np
 from collections import deque
 import warnings
@@ -122,13 +122,13 @@ model = RLAgent(env)
 
 # The main program loop
 for i_episode in range(NUM_EPISODES):
-    observation = env.reset()
+    observation = env.reset()[0]
     # Iterating through time steps within an episode
     for t in range(MAX_TIMESTEPS):
         env.render()
         action = model.select_action(observation)
         prev_obs = observation
-        observation, reward, done, info = env.step(action)
+        observation, reward, done, info, extra = env.step(action)
         # Keep a store of the agent's experiences
         model.remember(done, action, observation, prev_obs)
         model.experience_replay(20)
